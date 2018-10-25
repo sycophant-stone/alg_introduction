@@ -1,2 +1,0 @@
-/usr/bin/ar qc libleecode.a  CMakeFiles/leecode.dir/question1.cpp.o
-/usr/bin/ranlib libleecode.a

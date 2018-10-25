@@ -3,7 +3,7 @@
 int main()
 {
      printf("hello world.");
-     leet_question1();
+     leet_question_array();
      return 0;
 }
 
