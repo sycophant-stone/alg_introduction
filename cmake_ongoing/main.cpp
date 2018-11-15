@@ -4,7 +4,7 @@
 int main()
 {
      printf("hello world.\n");
-     find_min_k_num();
+     julyex_entry();
      //leet_question_array();
      return 0;
 }
