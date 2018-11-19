@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 #include <map>
 #include <vector>
 #include <string.h>
@@ -80,7 +81,54 @@ static void find_min_k_num()
     }
 }
 
+/*
+ * 对于有序数组,TwoSum的时间复杂度为O(nlogn),空间复杂度为O(1)
+ *****/
+static void TwoSum(int a[],int len, int sum)
+{
+    int begin=0;
+    int end=len-1;
+    while(begin<end){
+        if (a[begin]+a[end]>sum)
+            end--;
+        else if (a[begin]+a[end]<sum)
+            begin++;
+        else{
+            printf("%d and %d\n",a[begin],a[end]);
+            begin++;
+            end--;
+        }
+    }
+    
+}
+
+static void find_fix_sum_num()
+{
+    int a[10] = {9,6,3,8,5,2,7,4,1,0};
+    /*1. sort
+     ******/
+    printf("the origin array:\n");
+    for (int i=0;i<10;i++){
+        //printf("a[%d]=%c \n",i,a[i]+'0');
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    sort(a,a+10);
+    printf("after sorting:\n");
+    for (int i=0;i<10;i++){
+        //printf("a[%d]=%c \n",i,a[i]+'0');
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+
+    /*2. TwoSum
+     ******/
+    TwoSum(a,10,7);
+    
+}
+
 void julyex_entry()
 {
-    find_min_k_num();
+//    find_min_k_num();
+    find_fix_sum_num();
 }
