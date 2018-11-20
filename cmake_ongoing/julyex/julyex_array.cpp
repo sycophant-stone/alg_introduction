@@ -132,7 +132,7 @@ static int median3sort( int a[], int left, int right )
 { 
     int centor;
     centor=(left + right)/2;
-    printf("[median3sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, centor:%d\n", left, left, a[left], right, right, a[right], centor);
+    //printf("[median3sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, centor:%d\n", left, left, a[left], right, right, a[right], centor);
     if (a[left]>a[centor]) {
         std::swap(a[left], a[centor]);
     }
@@ -144,11 +144,12 @@ static int median3sort( int a[], int left, int right )
     }
     return a[centor];
 } 
-static int bfirst=2;
+//static int bfirst=2;
 static void quick_sort(int a[],int l, int r)
 {
     int pivot,centor,i,j;
     pivot=median3sort(a,l,r);
+    #if 0
     if (bfirst>0){
         bfirst--;
         printf("after median3sort:\n");
@@ -158,13 +159,14 @@ static void quick_sort(int a[],int l, int r)
         }
         printf("\n");
     }
+    #endif
     centor=(l+r)/2;
     i=l;
     j=r;
     while(i<j){   // 注意这个交换条件
         while(a[i]<pivot){i++;};
         while(a[j]>pivot){j--;};
-        printf("[quick_sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, pivot:%d, centor:%d\n", i, i, a[i], j, j, a[j], pivot, centor);
+        //printf("[quick_sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, pivot:%d, centor:%d\n", i, i, a[i], j, j, a[j], pivot, centor);
         if(i>=j)
             break;
         std::swap(a[i],a[j]);
@@ -198,11 +200,49 @@ static void quick_sort_case()
 
 }
 
+static void merge_two_arrays(int a[], int alen, int b[], int blen)
+{
+    int *c,i=0,j=0,clen,k=0;
+    clen=alen+blen;
+    c = (int*)malloc(clen);
+    while(alen>0&&blen>0){
+        if (a[i]>b[j]){
+            c[k++]=b[j++];
+            blen--;
+        }else{
+            c[k++]=a[i++];
+            alen--;
+        }
+    }
+    while(alen>0){
+            c[k++]=a[i++];
+            alen--;
+    }
+    while(blen>0){
+            c[k++]=b[j++];
+            blen--;
+    }
+    
+    for(int m=0;m<clen;m++){
+        printf("%d ",c[m]);
+    }
+    printf("\n");
+}
+
+static void merge_two_arrays_case()
+{
+    int a[5] = {9,6,3,8,5};
+    int b[5] = {2,7,4,1,0};
+    quick_sort(a,0,5-1);
+    quick_sort(b,0,5-1);
+    merge_two_arrays(a,5,b,5);
+}
 
 
 void julyex_entry()
 {
 //    find_min_k_num();
 //    find_fix_sum_num();
-    quick_sort_case();
+//    quick_sort_case();
+    merge_two_arrays_case();
 }
