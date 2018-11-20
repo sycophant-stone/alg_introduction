@@ -127,8 +127,80 @@ static void find_fix_sum_num()
     
 }
 
+static int median3sort( int a[], int left, int right )
+//下面的快速排序算法实现之一，及通过三数取中分割法寻找最小的k个数的快速选择SELECT算法都要调用这个median3函数
+{ 
+    int centor;
+    centor=(left + right)/2;
+    printf("[median3sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, centor:%d\n", left, left, a[left], right, right, a[right], centor);
+    if (a[left]>a[centor]) {
+        std::swap(a[left], a[centor]);
+    }
+    if (a[left]>a[right]) {
+        std::swap(a[left], a[right]);
+    }
+    if (a[centor]>a[right]) {
+        std::swap(a[centor], a[right]);
+    }
+    return a[centor];
+} 
+static int bfirst=2;
+static void quick_sort(int a[],int l, int r)
+{
+    int pivot,centor,i,j;
+    pivot=median3sort(a,l,r);
+    if (bfirst>0){
+        bfirst--;
+        printf("after median3sort:\n");
+        for (int i=0;i<10;i++){
+            //printf("a[%d]=%c \n",i,a[i]+'0');
+            printf("%d ",a[i]);
+        }
+        printf("\n");
+    }
+    centor=(l+r)/2;
+    i=l;
+    j=r;
+    while(i<j){   // 注意这个交换条件
+        while(a[i]<pivot){i++;};
+        while(a[j]>pivot){j--;};
+        printf("[quick_sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, pivot:%d, centor:%d\n", i, i, a[i], j, j, a[j], pivot, centor);
+        if(i>=j)
+            break;
+        std::swap(a[i],a[j]);
+    }
+    if (l>=r)     // 注意这个退出条件.
+        return ;
+    //printf("[quick_sort]: l:%d, a[%d]:%d, r:%d, a[%d]:%d, pivot:%d, centor:%d\n", l, l, a[l], r, r, a[r], pivot, centor);
+    quick_sort(a,l,centor);
+    quick_sort(a,centor+1,r);
+    
+}
+
+static void quick_sort_case()
+{
+    int a[10] = {9,6,3,8,5,2,7,4,1,0};
+    /*1. sort
+     ******/
+    printf("the origin array:\n");
+    for (int i=0;i<10;i++){
+        //printf("a[%d]=%c \n",i,a[i]+'0');
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    quick_sort(a,0,10-1);
+    printf("after sorting:\n");
+    for (int i=0;i<10;i++){
+        //printf("a[%d]=%c \n",i,a[i]+'0');
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+
+}
+
 void julyex_entry()
 {
 //    find_min_k_num();
-    find_fix_sum_num();
+//    find_fix_sum_num();
+    quick_sort_case();
 }
