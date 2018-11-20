@@ -4,7 +4,8 @@
 int main()
 {
      printf("hello world.\n");
-     julyex_entry();
+     //julyex_entry();
+     julyex_list_entry();
      //leet_question_array();
      return 0;
 }
