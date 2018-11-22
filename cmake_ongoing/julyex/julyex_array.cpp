@@ -68,7 +68,8 @@ static void _find_min_k_num(int dat[],int k,int l,int r)
     }
     show_data("after recurrent",dat,10);
 }
-
+// 寻找无序数组中最小的k个数.
+//    采用快速选择法.
 static void find_min_k_num()
 {
     int test_dat[]={8, 1, 4, 9, 6, 3, 5, 2, 7, 0};
@@ -80,6 +81,11 @@ static void find_min_k_num()
         julyex_logv("[k:%d]:%d\n",k,test_dat[i]);
     }
 }
+
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
 
 /*
  * 对于有序数组,TwoSum的时间复杂度为O(nlogn),空间复杂度为O(1)
@@ -101,7 +107,9 @@ static void TwoSum(int a[],int len, int sum)
     }
     
 }
-
+// 在无序数组中,找到和为定值的某两个数的组合.
+//    先排序成有序
+//    前后依次求和做判断.
 static void find_fix_sum_num()
 {
     int a[10] = {9,6,3,8,5,2,7,4,1,0};
@@ -126,6 +134,11 @@ static void find_fix_sum_num()
     TwoSum(a,10,7);
     
 }
+
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
 
 static int median3sort( int a[], int left, int right )
 //下面的快速排序算法实现之一，及通过三数取中分割法寻找最小的k个数的快速选择SELECT算法都要调用这个median3函数
@@ -200,6 +213,12 @@ static void quick_sort_case()
 
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+
+
+
 static void merge_two_arrays(int a[], int alen, int b[], int blen)
 {
     int *c,i=0,j=0,clen,k=0;
@@ -229,6 +248,7 @@ static void merge_two_arrays(int a[], int alen, int b[], int blen)
     printf("\n");
 }
 
+// 合并两个无序数组
 static void merge_two_arrays_case()
 {
     int a[5] = {9,6,3,8,5};
@@ -238,11 +258,46 @@ static void merge_two_arrays_case()
     merge_two_arrays(a,5,b,5);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+
+// m个珠子
+// n种颜色
+static int find_min_len_orbs(int a[],int m,int n)
+{
+    int *flags,product=1,i;
+    flags=(int*)malloc(n);
+    memset(flags,0,n);
+    for(i=0;i<m;i++){
+        flags[a[i]]++;
+        product=1;
+        for(int j=0;j<n;j++){
+            product*=flags[j];
+        }
+        if(product>0)
+            break;
+        
+    }
+    free(flags);
+    printf("[find_min_len_orbs]: minl:%d\n",i);
+    return i;
+}
+// 一串首尾相连的珠子(m个)，有N种颜色(N<=10)，设计一个算法，取出其中一段，要求包含所有N中颜色，并使长度最短。
+static void find_min_len_orbs_case()
+{
+    int a[10] = {2,1,0,1,1,2,1,0,1,1}; // 不同值代表不同颜色.
+    int minl;
+    minl=find_min_len_orbs(a,10,3);
+    
+}
+
 
 void julyex_entry()
 {
 //    find_min_k_num();
 //    find_fix_sum_num();
 //    quick_sort_case();
-    merge_two_arrays_case();
+//    merge_two_arrays_case();
+    find_min_len_orbs_case();
 }
