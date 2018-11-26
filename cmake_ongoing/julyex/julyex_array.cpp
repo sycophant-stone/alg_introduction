@@ -1,16 +1,20 @@
 #include<iostream>
 #include<algorithm>
 #include <map>
+#include <list>
 #include <vector>
 #include <string.h>
 #include <stdio.h>
 using namespace std;
-//#define OPEN_LOG
+#define OPEN_LOG
 #ifdef OPEN_LOG
 #define julyex_logv printf
+#define JULY_LOGI(format,...) printf("[Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
 #else
 #define julyex_logv 
+#define JULY_LOGI(format,...) 
 #endif
+
 
 static int median3( int a[], int left, int right )
 //下面的快速排序算法实现之一，及通过三数取中分割法寻找最小的k个数的快速选择SELECT算法都要调用这个median3函数
@@ -292,6 +296,40 @@ static void find_min_len_orbs_case()
     
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+
+
+// 输入两个整数n 和m，从数列1，2，3.......n 中随意取几个数, 使其和等于m ,要求将其中所有的可能组合列出来
+list<int> list_saver;
+static void find_sum_of_k_num(int a[],int n,int sum)
+{
+    if(sum<=0||n<=0){
+        return ;
+    }
+    JULY_LOGI("sum:%d,n:%d\n",sum,n);
+    if(sum==n){
+        //JULY_LOGI("sum:%d,n:%d\n",sum,n);
+        for(list<int>::iterator iter=list_saver.begin();iter!=list_saver.end();iter++){
+            printf("%d ",*iter);
+        }
+        printf("%d\n",n);
+    }
+    list_saver.push_front(n);
+    find_sum_of_k_num(a,n-1,sum-n);
+    list_saver.pop_front();
+    find_sum_of_k_num(a,n-1,sum);
+}
+
+static void find_sum_of_k_num_case()
+{
+    int a[10]={1,2,3,4,5,6,7,8,9,10};
+    JULY_LOGI("ENTER\n");
+    find_sum_of_k_num(a,10,10);
+    JULY_LOGI("EXIT\n");
+
+}
 
 void julyex_entry()
 {
@@ -300,4 +338,5 @@ void julyex_entry()
 //    quick_sort_case();
 //    merge_two_arrays_case();
 //    find_min_len_orbs_case();
+    find_sum_of_k_num_case();
 }

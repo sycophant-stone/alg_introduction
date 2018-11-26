@@ -3,7 +3,7 @@
 #include "julyex.hpp"
 int main()
 {
-     printf("hello world.\n");
+     //printf("hello world.\n");
      julyex_entry();
      julyex_list_entry();
      //leet_question_array();
