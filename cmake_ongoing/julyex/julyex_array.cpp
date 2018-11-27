@@ -300,6 +300,7 @@ static void find_min_len_orbs_case()
 /****************************************************************************************/
 /****************************************************************************************/
 
+// 解法1
 
 // 输入两个整数n 和m，从数列1，2，3.......n 中随意取几个数, 使其和等于m ,要求将其中所有的可能组合列出来
 list<int> list_saver;
@@ -322,13 +323,58 @@ static void find_sum_of_k_num(int a[],int n,int sum)
     find_sum_of_k_num(a,n-1,sum);
 }
 
+// 解法2 回溯法+剪枝
+
+
+static void find_sum_of_k_num_backtracking(int t, int k, int r, int& M, bool& flag, bool* X)
+{
+    X[k]=true; //对于第k个数,设成true,紧接着做如下判断.如果k和t之和为期望值M,则找到这些值,打印它们.
+    JULY_LOGI("X[%d]=%d,t:%d,k:%d,r:%d,M:%d\n",k,X[k],t,k,r,M);
+    if(t+k==M){
+        // 找到
+        flag=true;
+        for(int i=1;i<=k;i++){ //对于X,从1到k共k+1个.
+            if(X[i]==1){
+                printf("%d ",i);
+            }
+        }
+        printf("\n");
+    }else{
+        // t+k!=M 有可能, t+k<M 或者 t+k>M
+        if(t+k+(k+1)<=M){ // 条件1
+            // 处理t+k<M的情况.
+            find_sum_of_k_num_backtracking(t+k,k+1,r-k,M,flag,X); // 如果把k吸收之后,t+k+k+1仍然小于M,那肯定要把k包含掉.然后递归左树.
+        }
+        if((t+r-k>=M)&&(t+(k+1)<=M)){ // 条件2.  注意这里并非else if的情况.也就是说在条件1满足后,也可以满足条件2.这个也是打印出所有组合的关键. 
+                                      //         当然在t+k不满足M时候,要跳过k来看后面是否满足,
+                                      //         除此之外,当t+k满足M的时候,在记录好k之后也要查一下k之后的是否也满足,这个是打印出所有组合的关键.
+            // 满足条件1: t+k!=M
+            // 满足条件2: t+k+(k+1)>M
+            // 尝试抛弃k值.所谓抛弃,则X[k]为false
+            X[k]=false;
+            find_sum_of_k_num_backtracking(t,k+1,r-k,M,flag,X); // 因为抛弃k值,所以t不用加k了.
+        }
+    }
+}
+
 static void find_sum_of_k_num_case()
 {
     int a[10]={1,2,3,4,5,6,7,8,9,10};
-    JULY_LOGI("ENTER\n");
-    find_sum_of_k_num(a,10,10);
-    JULY_LOGI("EXIT\n");
-
+    int N=10,M=10;
+    //JULY_LOGI("ENTER1\n");
+    //find_sum_of_k_num(a,10,10);
+    //JULY_LOGI("EXIT1\n");
+    
+    JULY_LOGI("ENTER2 backtracking\n");
+    bool* X=(bool*) malloc(sizeof(bool)*(10));
+    memset(X,false,sizeof(bool)*(10));
+    int sum=(N+1)*N/2;// 最大的和
+    bool f=false;
+    find_sum_of_k_num_backtracking(0,1,sum,M,f,X);
+    if(f==false){
+        JULY_LOGI("not found\n");
+    }
+    JULY_LOGI("EXIT2 backtracking\n");
 }
 
 void julyex_entry()
