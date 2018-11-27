@@ -14,7 +14,8 @@ using namespace std;
 #define julyex_logv 
 #define JULY_LOGI(format,...) 
 #endif
-
+#define ENTER JULY_LOGI("ENTER\n");
+#define EXIT  JULY_LOGI("EXIT\n");
 
 static int median3( int a[], int left, int right )
 //下面的快速排序算法实现之一，及通过三数取中分割法寻找最小的k个数的快速选择SELECT算法都要调用这个median3函数
@@ -377,6 +378,52 @@ static void find_sum_of_k_num_case()
     JULY_LOGI("EXIT2 backtracking\n");
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+
+// 给定一个数组,数组里有正负,数组中连续的一个或者多个组成一个子数组,求子数组的最大的值.
+static void find_max_continuous_subarray(int a[],int len)
+{
+    int cur=0,max=a[0];
+    int begin=-1,end=-1;
+    for (int i=0;i<len;i++){
+        if(cur>=0){
+            cur+=a[i];
+            if(begin==-1){
+                begin=i;
+            }
+        }else {
+            cur=a[i];
+            begin=i;
+            end=-1;
+        }
+        if(max<=cur){
+            max=cur;
+            end=i;
+            //JULY_LOGI("max:%d,cur:%d,i:%d\n",max,cur,i);
+        }
+    }
+    //JULY_LOGI("max:%d,begin:%d,end:%d\n",max,begin,end);
+    if(begin<0||begin>end||end<0){
+        JULY_LOGI("Error\n");
+        return ;
+    }
+    for(int i=begin;i<=end;i++){
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    printf("max:%d\n",max);
+}
+
+static void find_max_continuous_subarray_case()
+{
+    ENTER
+    int a[8]={1,-2,3,10,-4,7,2,-5};
+    find_max_continuous_subarray(a,8);
+    EXIT
+}
+
 void julyex_entry()
 {
 //    find_min_k_num();
@@ -384,5 +431,6 @@ void julyex_entry()
 //    quick_sort_case();
 //    merge_two_arrays_case();
 //    find_min_len_orbs_case();
-    find_sum_of_k_num_case();
+//    find_sum_of_k_num_case();
+    find_max_continuous_subarray_case();
 }
