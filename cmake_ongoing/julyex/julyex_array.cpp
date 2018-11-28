@@ -424,6 +424,61 @@ static void find_max_continuous_subarray_case()
     EXIT
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+
+// 一个台阶有n级,如果一次可以跳一级,也可以跳两级.总共多少种跳法.
+
+static int fibonacci(int n)
+{
+    int result[3]={0,1,2};
+    if (n<2){
+        return result[n];
+    }
+    return fibonacci(n-1)+fibonacci(n-2);
+}
+
+static void fibonacci_staris_case()
+{
+    int n=10,ret=0;
+    ret=fibonacci(n);
+    JULY_LOGI("ret:%d\n",ret);
+}
+
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+static bool isodds(int x)
+{
+    return (x%2==1);
+}
+static void odd_even_sort(int a[],int len)
+{
+    int begin=0,end=len-1;
+    while(begin<=end){
+        while(isodds(a[begin])){
+            begin++;
+        }
+        while(!isodds(a[end])){
+            end--;
+        }
+        if(begin>end)
+            break;
+        //JULY_LOGI("begin:%d,end:%d,a[begin]:%d,a[end]:%d\n",begin,end,a[begin],a[end]);
+        swap(a[begin],a[end]);
+    }
+}
+static void odd_even_sort_case()
+{
+    int a[10]={1,2,3,4,5,6,7,8,9,10};
+    odd_even_sort(a,10);
+    for(int i=0;i<10;i++){
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+}
 void julyex_entry()
 {
 //    find_min_k_num();
@@ -432,5 +487,7 @@ void julyex_entry()
 //    merge_two_arrays_case();
 //    find_min_len_orbs_case();
 //    find_sum_of_k_num_case();
-    find_max_continuous_subarray_case();
+//    find_max_continuous_subarray_case();
+//    fibonacci_staris_case();
+    odd_even_sort_case();
 }
