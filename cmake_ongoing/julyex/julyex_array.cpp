@@ -450,6 +450,8 @@ static void fibonacci_staris_case()
 /****************************************************************************************/
 /****************************************************************************************/
 /****************************************************************************************/
+// 奇偶选择问题.把一串数的奇数放在左边,偶数放在右边.
+// 可以考虑快排序的思想.
 static bool isodds(int x)
 {
     return (x%2==1);
@@ -479,6 +481,48 @@ static void odd_even_sort_case()
     }
     printf("\n");
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+enum enumType {BLUE,WHITE,RED};
+static void dutch_flag_sort(int a[],int len)
+{
+    int begin=0,middle=len/3,end=len/3*2;
+    JULY_LOGI("begin:%d,middle:%d,end:%d\n",begin,middle,end);
+    while((begin<middle)&&(middle<end)){
+        JULY_LOGI("begin:%d,middle:%d,end:%d\n",begin,middle,end);
+        if((begin<len/3)&&(middle<len/3*2)&&(a[middle]<WHITE)){
+            swap(a[begin],a[middle]);
+            if(a[middle]==WHITE)
+                middle++;
+            begin++;
+        }
+        if((middle<len/3*2)&&(a[middle]==WHITE)){
+            middle++;
+        }
+        if((end<len)&&(a[middle]>WHITE)){
+            swap(a[middle],a[end]);
+            if(a[middle]==WHITE)
+                middle++;
+            end++;
+        }
+        if((begin==len/3)&&(middle==len/3*2)&&(end==len))
+            break;
+    }
+    for(int i=0;i<len;i++){
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+}
+
+static void dutch_flag_case()
+{
+    int a[9]={2,0,1,0,0,2,1,1,2};
+    dutch_flag_sort(a,9);
+}
+
+
 void julyex_entry()
 {
 //    find_min_k_num();
@@ -489,5 +533,6 @@ void julyex_entry()
 //    find_sum_of_k_num_case();
 //    find_max_continuous_subarray_case();
 //    fibonacci_staris_case();
-    odd_even_sort_case();
+//    odd_even_sort_case();
+    dutch_flag_case();
 }
