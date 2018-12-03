@@ -522,6 +522,34 @@ static void dutch_flag_case()
     dutch_flag_sort(a,9);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// 完美洗牌算法.分成几个小部分.
+// 位置替换算法.
+
+static void location_replace_case(char a[],int len)
+{
+    char* b=(char*)malloc(sizeof(char)*len);
+    int n=len/2;
+    for(int i=1;i<=len;i++){
+        JULY_LOGI("i:%d,2i:%d,2n+1:%d,mod:%d,a[i-1:%d]:%c\n",i,2*i,2*n+1,(2*i)%(2*n+1),i-1,a[i-1]);
+        b[(2*i)%(2*n+1)-1]=a[i-1]; // 注意b[?]和a[?]中都有一个-1操作,这个是为了数学公式从1开始,但是数组从0开始,保持一个偏移的一致性.
+    }
+    for(int i=0;i<len;i++){
+        a[i]=b[i];
+        printf("%c ",a[i]);
+    }
+    printf("\n");
+    free(b);
+}
+
+static void perfect_shuffle_case()
+{
+    char a[9]="abcdABCD"; // 最终目的到 "aAbBcCdD"
+    location_replace_case(a,8);//  此阶段===> "AaBbCcDd"
+    
+}
 
 void julyex_entry()
 {
@@ -534,5 +562,6 @@ void julyex_entry()
 //    find_max_continuous_subarray_case();
 //    fibonacci_staris_case();
 //    odd_even_sort_case();
-    dutch_flag_case();
+//    dutch_flag_case();
+    perfect_shuffle_case();
 }
