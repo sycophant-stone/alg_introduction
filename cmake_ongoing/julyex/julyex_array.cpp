@@ -551,6 +551,39 @@ static void perfect_shuffle_case()
     
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// 给定有序数组.找到某值.
+// 二分查找法, 虽然算法谈不上新颖,但正确写对这个方法还是有难度的.
+
+static int binary_search(int a[], int len, int val)
+{
+    int left=0;
+    int right=len-1;
+    // 注意这里的结束条件:
+    // 如果是left<=right,则后面的right=middle-1
+    // 如果是left<right, 后面的right=middle.
+    while(left<=right){
+        int middle=left+((right-left)>>1);
+        if(a[middle]>val){
+            right=middle-1;
+        }else if (a[middle]<val){
+            left=middle+1;
+        }else{
+            printf("find! idx:%d\n",middle);
+            return middle;
+        }
+    }
+}
+
+static void binary_search_case()
+{
+    int a[10] = {9,6,3,8,5,2,7,4,1,0},ret=0;
+    sort(a,a+10);
+    ret=binary_search(a,10,5);
+}
+
 void julyex_entry()
 {
 //    find_min_k_num();
@@ -563,5 +596,6 @@ void julyex_entry()
 //    fibonacci_staris_case();
 //    odd_even_sort_case();
 //    dutch_flag_case();
-    perfect_shuffle_case();
+//    perfect_shuffle_case();
+    binary_search_case();
 }
