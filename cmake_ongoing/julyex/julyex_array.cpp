@@ -584,6 +584,35 @@ static void binary_search_case()
     ret=binary_search(a,10,5);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// 出现次数超过一半的数
+
+static void over_half_case(int a[],int len)
+{
+    int candidate=a[0];
+    int ntimes=1;
+    for(int i=0;i<len;i++){
+        if(ntimes==0){
+            candidate=a[i]; //更新
+            ntimes++;
+        }else{
+            if(candidate==a[i]){
+                ntimes++;
+            }else{
+                ntimes--; // 其他的值会减小之前的值的累加个数,但是如果其他的值不够多,不足以完全减小之前的累加,也反映到之前的累加的数毕竟超过其他的数,自然超过一半.
+            }
+        }
+    }
+    printf("find! %d\n",candidate);
+}
+
+static void num_over_half_case()
+{
+    int a[5]={0,1,2,1,1};
+    over_half_case(a,5);
+}
 void julyex_entry()
 {
 //    find_min_k_num();
@@ -597,5 +626,6 @@ void julyex_entry()
 //    odd_even_sort_case();
 //    dutch_flag_case();
 //    perfect_shuffle_case();
-    binary_search_case();
+//    binary_search_case();
+    num_over_half_case();
 }
