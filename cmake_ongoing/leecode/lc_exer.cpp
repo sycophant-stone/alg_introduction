@@ -125,3 +125,7 @@ void leet_question_array()
     spiral_matrix_ii(5);
 }
 
+void lc_entry()
+{
+    spiral_matrix_ii(3);
+}
