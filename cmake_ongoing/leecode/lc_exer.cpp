@@ -4,11 +4,13 @@
 #include <string.h>
 #include <stdio.h>
 using namespace std;
-//#define OPEN_LOG
+#define OPEN_LOG
 #ifdef OPEN_LOG
 #define leet_logv printf
+#define LC_LOGI(format,...) printf("[lc][Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
 #else
 #define leet_logv 
+#define LC_LOGI
 #endif
 #if 0
 static int* twoSum(int nums[], int target) 
@@ -117,15 +119,49 @@ static void spiral_matrix_ii(int n)
 
 
 
-void leet_question_array()
+static void spiral_matrix_ii_case()
 {
-    cout<<"leet_question1"<<endl;
+    LC_LOGI("E");
     spiral_matrix_ii(3);
     spiral_matrix_ii(4);
     spiral_matrix_ii(5);
+    LC_LOGI("X");
+}
+
+
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#27 remove elements
+// 对于一个给定的数组，删除其中所有等于一个特定值的数
+
+static int removeElements(vector<int> &nums,int val)
+{
+    int j=0;
+    for(int i=0;i<nums.size();i++){
+        if(nums[i]!=val){
+            nums[j++]=nums[i];
+        }
+    }
+    for(int i=0;i<j;i++){
+        printf("%d ",nums[i]);
+    }
+    printf("\n");
+    LC_LOGI("cnt:%d\n",j);
+    return j;
+}
+
+static void lc27__removeElements_case()
+{
+    int a[5]={1,2,3,2,2};
+    vector<int> nums(a,a+5);
+    
+    removeElements(nums,2);
 }
 
 void lc_entry()
 {
-    spiral_matrix_ii(3);
+    //spiral_matrix_ii_case();
+    lc27__removeElements_case();
 }
