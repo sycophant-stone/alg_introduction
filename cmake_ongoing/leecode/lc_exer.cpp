@@ -160,8 +160,41 @@ static void lc27__removeElements_case()
     removeElements(nums,2);
 }
 
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#26 RemoveDuplicatesfromSortedArray
+// 对于有序数组,删除多余成员.
+static int RemoveDuplicatesfromSortedArray(vector<int> & nums)
+{
+    int s=0;
+    int len=nums.size();
+    for(int i=0;i<len;i++){
+        if(i+1<len && nums[i]==nums[i+1]){
+            continue;
+        }else{
+            nums[s++]=nums[i];
+        }
+    }
+    for(int i=0;i<s;i++){
+        printf("%d ",nums[i]);
+    }
+    printf("\n");
+    return s;
+}
+
+static void lc26__RemoveDuplicatesfromSortedArray_case()
+{
+    int a[10]={1,2,2,2,3,4,4,5,6,7};
+    vector<int> nums(a,a+10);
+    RemoveDuplicatesfromSortedArray(nums);
+}
+
+
 void lc_entry()
 {
-    //spiral_matrix_ii_case();
-    lc27__removeElements_case();
+//    spiral_matrix_ii_case();
+//    lc27__removeElements_case();
+    lc26__RemoveDuplicatesfromSortedArray_case();
 }
