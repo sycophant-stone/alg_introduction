@@ -191,10 +191,48 @@ static void lc26__RemoveDuplicatesfromSortedArray_case()
     RemoveDuplicatesfromSortedArray(nums);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#80 RemoveDuplicatesfromSortedArray_II
+// 对一个给定的数组进行筛选，同样的数字最多保留2个，求筛选后的剩余数字个数。
+
+static int RemoveDuplicatesfromSortedArray_II(vector<int> &nums)
+{
+    int len =nums.size(),j=0;
+    vector<int> save(nums);
+    std::fill(save.begin(), save.end(), 0);
+    save[0]=nums[0];
+    save[1]=nums[1];
+    j=2;
+    for(int i=2;i<len;i++){ 
+        //LC_LOGI("i:%d,j:%d,nums[i]:%d,nums[i-1]:%d,nums[i-2]:%d\n",i,j,nums[i],nums[i-1],nums[i-2]);
+        if(nums[i]!=nums[i-1]||nums[i]!=nums[i-2]){
+            save[j++]=nums[i];
+            //LC_LOGI("i:%d,j:%d,save[j]:%d,nums[i]:%d\n",i,j-1,nums[i],save[j-1]);
+        }
+    }
+    for(int i=0;i<j;i++){
+        printf("%d ",save[i]);
+    }
+    printf("\n");
+    printf("cnt:%d\n",j);
+    return j;
+    
+}
+
+static void lc80__RemoveDuplicatesfromSortedArray_II_case()
+{
+    int a[6]={1,1,1,2,2,3},cnt=0;
+    vector<int> nums(a,a+6);
+    
+    cnt=RemoveDuplicatesfromSortedArray_II(nums);
+}
 
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
 //    lc27__removeElements_case();
-    lc26__RemoveDuplicatesfromSortedArray_case();
+//    lc26__RemoveDuplicatesfromSortedArray_case();
+    lc80__RemoveDuplicatesfromSortedArray_II_case();
 }
