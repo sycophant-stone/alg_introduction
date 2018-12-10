@@ -3,11 +3,13 @@
 #include <vector>
 #include <string.h>
 #include <stdio.h>
+#include <algorithm>
+
 using namespace std;
 #define OPEN_LOG
 #ifdef OPEN_LOG
 #define leet_logv printf
-#define LC_LOGI(format,...) printf("[lc][Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
+#define LC_LOGI(format,...) printf("[lc][%s]:[Line: %05d]: "format"\n", __FUNCTION__,__LINE__, ##__VA_ARGS__)  
 #else
 #define leet_logv 
 #define LC_LOGI
@@ -229,10 +231,72 @@ static void lc80__RemoveDuplicatesfromSortedArray_II_case()
     cnt=RemoveDuplicatesfromSortedArray_II(nums);
 }
 
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// Helper
+
+static void print_int_vector(vector<int> &nums)
+{
+    for(int i=0;i<nums.size();i++){
+        printf("%d ",nums[i]);
+    }
+    printf("\n");
+}
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#189 RotateArray
+// 翻转数组
+
+// For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4].
+static void RotateArray_I(vector<int> &nums,int n,int k)
+{
+    vector<int> temp(nums);
+    LC_LOGI("before taking action\n");
+    print_int_vector(nums);
+    for(int i=0;i<n;i++){
+        nums[(i+k)%n]=temp[i];
+    }
+    LC_LOGI("after taking action\n");
+    print_int_vector(nums);
+}
+static void RotateArray_II(vector<int> &nums,int n,int k)
+{
+    // 1. 翻转前n-k
+    // 2. 翻转后k
+    // 3. 整体翻转.
+    
+    std::reverse(nums.begin(),nums.begin()+n-k);
+    std::reverse(nums.begin()+n-k,nums.end());
+    std::reverse(nums.begin(),nums.end());
+    print_int_vector(nums);
+}
+
+static void lc189__RotateArray_case()
+{
+    int a[9]={1,2,3,4,5,6,7,8,9},n,k;
+    LC_LOGI("E");
+    vector<int> nums(a,a+9);
+    vector<int> temp(nums);
+    n=nums.size();
+    k=3;
+    LC_LOGI("methods:I");
+    RotateArray_I(nums,n,k);
+    nums=temp;
+    LC_LOGI("methods:II");
+    RotateArray_II(nums,n,k);
+    LC_LOGI("X");
+}
+
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
 //    lc27__removeElements_case();
 //    lc26__RemoveDuplicatesfromSortedArray_case();
-    lc80__RemoveDuplicatesfromSortedArray_II_case();
+//    lc80__RemoveDuplicatesfromSortedArray_II_case();
+    lc189__RotateArray_case();
 }
