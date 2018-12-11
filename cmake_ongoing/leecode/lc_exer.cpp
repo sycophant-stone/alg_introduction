@@ -5,15 +5,21 @@
 #include <stdio.h>
 #include <algorithm>
 
+#include<unordered_set>
+
 using namespace std;
-#define OPEN_LOG
+//#define OPEN_LOG
 #ifdef OPEN_LOG
 #define leet_logv printf
 #define LC_LOGI(format,...) printf("[lc][%s]:[Line: %05d]: "format"\n", __FUNCTION__,__LINE__, ##__VA_ARGS__)  
+
 #else
 #define leet_logv 
 #define LC_LOGI
 #endif
+
+#define LC_LOGI (printf("%s(%d)-<%s>: ",__FILE__, __LINE__, __FUNCTION__), printf)
+
 #if 0
 static int* twoSum(int nums[], int target) 
 {   
@@ -291,6 +297,63 @@ static void lc189__RotateArray_case()
     LC_LOGI("X");
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#41 first missing positive
+
+// 这道题让我们找缺失的首个正数，由于限定了O(n)的时间，所以一般的排序方法都不能用，最开始我没有看到还限制了空间复杂度，所以想到了用HashSet来解，这个思路很简单，第一遍遍历数组把所有的数都存入HashSet中，并且找出数组的最大值，下次循环从1开始递增找数字，哪个数字找不到就返回哪个数字，如果一直找到了最大的数字，则返回最大值+1
+
+static int firstMissingPositive_I(vector<int> &nums)
+{
+    int mx=0;
+    unordered_set<int> s;
+    for(num:nums){
+        if(num<=0)
+            continue;
+        s.insert(num);
+        mx=max(num,mx);
+    }
+    for(int i=1;i<mx;i++){
+        if(s.count(i)==0)
+            return i;
+    }
+    return mx+1;
+    
+}
+// 规定一个规则, a[i]==i+1;的规则,不满足就要交换.
+static int firstMissingPositive_II(vector<int> &nums)
+{
+    int n=nums.size();
+    for(int i=0;i<n;){
+        if(nums[i]!=i+1 && nums[i]>=1 && nums[i]<=n&& nums[i]!=nums[nums[i]-1]){
+            swap(nums[i],nums[nums[i]-1]);
+        }else{
+            i++;
+        }
+    }
+    for(int i=0;i<n;i++){
+        if(nums[i]!=i+1)
+            return i+1;
+    }
+    return n+1;
+}
+
+static void lc41__FirstMissingPositive_case()
+{
+    int a[6]={-1,7,8,9,11,12},ret=-1;
+    vector<int> nums(a,a+6);
+    vector<int> temp=nums;
+    LC_LOGI("E\n");
+    LC_LOGI("motheds:I\n");
+    ret=firstMissingPositive_I(nums);
+    LC_LOGI("find! %d\n",ret);
+    LC_LOGI("motheds:II\n");
+    ret=-1;
+    nums=temp;
+    ret=firstMissingPositive_II(nums);
+    LC_LOGI("find! %d\n",ret);
+}
 
 void lc_entry()
 {
@@ -298,5 +361,6 @@ void lc_entry()
 //    lc27__removeElements_case();
 //    lc26__RemoveDuplicatesfromSortedArray_case();
 //    lc80__RemoveDuplicatesfromSortedArray_II_case();
-    lc189__RotateArray_case();
+//    lc189__RotateArray_case();
+    lc41__FirstMissingPositive_case();
 }

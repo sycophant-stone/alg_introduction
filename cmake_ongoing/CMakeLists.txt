@@ -7,4 +7,5 @@ add_subdirectory(julyex)
 #build a variable to save the filename that need build 
 set(SRC_LIST main.cpp )
 add_executable (hello_bin ${SRC_LIST})
+add_compile_options(-std=c++11)
 target_link_libraries(hello_bin leecode julyex)
