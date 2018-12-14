@@ -449,6 +449,41 @@ static void lc134__GasStation_case()
     LC_LOGI("find! start:%d\n",start);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#118 pascal triangle
+// 具体生成算是：每一行的首个和结尾一个数字都是1，从第三行开始，中间的每个数字都是上一行的左右两个数字之和。
+
+class PacalTriangle{
+    public:
+    vector<vector<int>> generator(int numRows){
+        vector<vector<int>> triangle(numRows,vector<int>());
+        for(int i=0;i<numRows;i++){
+            triangle[i].resize(i+1,1);  // 第i行有i+1个单位, 比如第0行有一个1, 第一行有2个1,1.
+            for(int j=1;j<i;j++){
+                triangle[i][j]=triangle[i-1][j-1]+triangle[i-1][j];
+            }
+        }
+        return triangle;
+    }
+    
+};
+
+static void lc118__PascalTriangle_case()
+{
+    int numRows=5;
+    vector<vector<int>> rest;
+    PacalTriangle pscal;
+    rest = pscal.generator(numRows);
+    for(int i=0;i<numRows;i++){
+        for(int j=0;j<i+1;j++){
+            printf("%d ", rest[i][j]);
+        }
+        printf("\n");
+    }
+
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -458,5 +493,6 @@ void lc_entry()
 //    lc189__RotateArray_case();
 //    lc41__FirstMissingPositive_case();
 //    lc299__BullsandCows_case();
-    lc134__GasStation_case();
+//    lc134__GasStation_case();
+    lc118__PascalTriangle_case();
 }
