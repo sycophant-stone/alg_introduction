@@ -467,6 +467,16 @@ class PacalTriangle{
         }
         return triangle;
     }
+    vector<int> generator_line(int rowid){
+        vector<int> res(rowid+1); // 第rowid行 有 rowid个单元.
+        res[0]=1;
+        for(int i=1;i<=rowid;i++){
+            for(int j=i;j>=1;j--){ // 从右边开始计算
+                res[j]+=res[j-1]; //每次计算包括,上一行res[j-1]和本次res[j].
+            }
+        }
+        return res;
+    }
     
 };
 
@@ -484,6 +494,25 @@ static void lc118__PascalTriangle_case()
     }
 
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#119 pascal triangle
+
+
+
+static void lc119__PascalTriangel_II_case()
+{
+    int numRow=5;
+    vector<int> ret;
+    PacalTriangle pacal;
+    ret=pacal.generator_line(numRow);
+    for(int i=0;i<numRow+1;i++){
+        printf("%d ",ret[i]);
+    }
+    printf("\n");
+}
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -494,5 +523,6 @@ void lc_entry()
 //    lc41__FirstMissingPositive_case();
 //    lc299__BullsandCows_case();
 //    lc134__GasStation_case();
-    lc118__PascalTriangle_case();
+//    lc118__PascalTriangle_case();
+    lc119__PascalTriangel_II_case();
 }
