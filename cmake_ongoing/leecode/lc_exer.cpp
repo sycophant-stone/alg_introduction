@@ -15,7 +15,7 @@ using namespace std;
 
 #else
 #define leet_logv 
-#define LC_LOGI
+//#define LC_LOGI
 #endif
 
 #define LC_LOGI (printf("%s(%d)-<%s>: ",__FILE__, __LINE__, __FUNCTION__), printf)
@@ -512,6 +512,40 @@ static void lc119__PascalTriangel_II_case()
     }
     printf("\n");
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#169 Majority Element
+// 求众数. 超过一半的数.
+// 用一种叫摩尔投票法 Moore Voting，需要O(n)的时间和O(1)的空间，比前一种方法更好。这种投票法先将第一个数字假设为众数，然后把计数器设为1，比较下一个数和此数是否相等，若相等则计数器加一，反之减一。然后看此时计数器的值，若为零，则将下一个值设为候选众数。以此类推直到遍历完整个数组，当前候选众数即为该数组的众数。
+// 下面我们来看本算法的思路，这是一种先假设候选者，然后再进行验证的算法。我们现将数组中的第一个数假设为众数，然后进行统计其出现的次数，如果遇到同样的数，则计数器自增1，否则计数器自减1，如果计数器减到了0，则更换下一个数字为候选者。这是一个很巧妙的设定，也是本算法的精髓所在，为啥遇到不同的要计数器减1呢，为啥减到0了又要更换候选者呢？首先是有那个强大的前提存在，一定会有一个出现超过半数的数字存在，那么如果计数器减到0了话，说明目前不是候选者数字的个数已经跟候选者的出现个数相同了，那么这个候选者已经很weak，不一定能出现超过半数，我们选择更换当前的候选者。那有可能你会有疑问，那万一后面又大量的出现了之前的候选者怎么办，不需要担心，如果之前的候选者在后面大量出现的话，其又会重新变为候选者，直到最终验证成为正确的众数
+
+class MajorityElement {
+    public:
+    int calc(vector<int> &nums){
+        int cnt=0,res=0;
+        for(num:nums){ // 前提,肯定存在众数. 假定第一个为众数,然后验证.
+            if(cnt==0){ // 归零之后重新计算众数.
+                res=num; 
+                cnt++;
+            }else if(num==res){
+                cnt++; // 相同则增
+            }else {
+                cnt--; // 不同则减
+            }
+        }
+        LC_LOGI("find! MajorityElement:%d\n",res);
+        return res;
+    }
+  
+};
+
+static void lc169__MajorityElement_case()
+{
+    vector<int> nums={2,2,1,1,1,2,2};
+    MajorityElement me;
+    me.calc(nums);
+}
 
 void lc_entry()
 {
@@ -524,5 +558,6 @@ void lc_entry()
 //    lc299__BullsandCows_case();
 //    lc134__GasStation_case();
 //    lc118__PascalTriangle_case();
-    lc119__PascalTriangel_II_case();
+//    lc119__PascalTriangel_II_case();
+    lc169__MajorityElement_case();
 }
