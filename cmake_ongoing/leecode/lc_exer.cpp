@@ -537,6 +537,43 @@ class MajorityElement {
         LC_LOGI("find! MajorityElement:%d\n",res);
         return res;
     }
+    vector<int> calc_II(vector<int> &nums){
+        vector<int> res;
+        // Moore Voting
+        int m=0,n=0,cntm=0,cntn=0;
+        for(auto &a:nums){
+            if(a==m){
+                cntm++;
+            }else if(a==n){
+                cntn++;
+            }else if(cntm==0){
+                m=a;
+            }else if(cntn==0){
+                n=a;
+            }else{
+                cntm--;
+                cntn--;
+            }
+        }
+        // 因为最多有2个大于n/3的众数,所以需要验证是否是2个.
+        cntm=cntn=0;
+        for(auto &a:nums){
+            if(a==m){
+                cntm++;
+            }else if(a==n){
+                cntn++;
+            }
+        }
+        
+        if(cntm>nums.size()/3){
+            
+            res.push_back(m);
+        }
+        if(cntn>nums.size()/3){
+            res.push_back(n);
+        }
+        return res;
+    }
   
 };
 
@@ -545,6 +582,21 @@ static void lc169__MajorityElement_case()
     vector<int> nums={2,2,1,1,1,2,2};
     MajorityElement me;
     me.calc(nums);
+}
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#229 MajorityElement_II
+// 这道题让我们求出现次数大于n/3的众数，而且限定了时间和空间复杂度，那么就不能排序，也不能使用哈希表，这么苛刻的限制条件只有一种方法能解了，那就是摩尔投票法 Moore Voting，这种方法在之前那道题Majority Element 求众数中也使用了。题目中给了一条很重要的提示，让我们先考虑可能会有多少个众数，经过举了很多例子分析得出，任意一个数组出现次数大于n/3的众数最多有两个，具体的证明我就不会了，我也不是数学专业的。那么有了这个信息，我们使用投票法的核心是找出两个候选众数进行投票，需要两遍遍历，第一遍历找出两个候选众数，第二遍遍历重新投票验证这两个候选众数是否为众数即可，选候选众数方法和前面那篇Majority Element 求众数一样，由于之前那题题目中限定了一定会有众数存在，故而省略了验证候选众数的步骤，这道题却没有这种限定，即满足要求的众数可能不存在，所以要有验证。
+
+static void lc229__MajorityElement_II_case()
+{
+    vector<int> nums={1,1,1,3,3,2,2,2};
+    vector<int> ret;
+    MajorityElement me;
+    ret=me.calc_II(nums);
+    print_int_vector(ret);
 }
 
 void lc_entry()
@@ -559,5 +611,6 @@ void lc_entry()
 //    lc134__GasStation_case();
 //    lc118__PascalTriangle_case();
 //    lc119__PascalTriangel_II_case();
-    lc169__MajorityElement_case();
+//    lc169__MajorityElement_case();
+    lc229__MajorityElement_II_case();
 }
