@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <algorithm>
-
+#include <limits.h>
 #include<unordered_set>
 
 using namespace std;
@@ -656,7 +656,43 @@ static void lc275__HIndex_II_case()
     int ret=hi.calc_II(citations);
     LC_LOGI("find! H index II:%d\n",ret);
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#243 Shortest Word Distance
 
+class ShortestWordDistance{
+    public:
+    int generate(vector<string> nums,string word1, string word2){
+        vector<int> wd1,wd2;
+        int dstance=INT_MAX;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==word1){
+                wd1.push_back(i);
+            }else if (nums[i]==word2){
+                wd2.push_back(i);
+            }
+        }
+        for(int i=0;i<wd1.size();i++){
+            for(int j=0;j<wd2.size();j++){
+                dstance= min(dstance,abs(wd1[i]-wd2[j]));
+            }
+        }
+        return dstance;
+    }
+};
+                             
+static void lc243__ShortestWordDistance_case()
+{
+    vector<string> bagwords={"practice", "makes", "perfect", "coding", "makes"};
+    ShortestWordDistance swd;
+    int distance=swd.generate(bagwords,"coding","practice");
+    LC_LOGI("find! distance:%d\n",distance);
+    distance=swd.generate(bagwords,"makes","coding");
+    LC_LOGI("find! distance:%d\n",distance);
+
+}
+                             
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -672,5 +708,6 @@ void lc_entry()
 //    lc169__MajorityElement_case();
 //    lc229__MajorityElement_II_case();
 //    lc274__HIndex_case();
-    lc275__HIndex_II_case();
+//    lc275__HIndex_II_case();
+    lc243__ShortestWordDistance_case();
 }
