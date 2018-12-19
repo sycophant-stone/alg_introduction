@@ -615,6 +615,22 @@ class HIndex{
         }
         return citations.size();
     }
+    int calc_II(vector<int> &nums){
+        // nums are sorted
+        int left=0,right=nums.size()-1;
+        int len=nums.size();
+        while(left<right){
+            int mid=0.5*(left+right);
+            if(nums[mid]==len-mid){
+                return len-mid;
+            }else if(nums[mid]<len-mid){
+                left=mid+1;
+            }else{
+                right=mid-1;
+            }
+        }
+        return len-left;
+    }
     
 };
 
@@ -625,6 +641,22 @@ static void lc274__HIndex_case()
     int ret=hi.calc(citations);
     LC_LOGI("find! H index:%d\n",ret);
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#275 H Index II
+// 这题是之前那道H-Index 求H指数的拓展，输入数组是有序的，让我们在O(log n)的时间内完成计算，看到这个时间复杂度，应该有很敏锐的意识应该用二分查找法
+
+
+static void lc275__HIndex_II_case()
+{
+    vector<int> citations={0,1,3,5,6};
+    HIndex hi;
+    int ret=hi.calc_II(citations);
+    LC_LOGI("find! H index II:%d\n",ret);
+}
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -639,5 +671,6 @@ void lc_entry()
 //    lc119__PascalTriangel_II_case();
 //    lc169__MajorityElement_case();
 //    lc229__MajorityElement_II_case();
-    lc274__HIndex_case();
+//    lc274__HIndex_case();
+    lc275__HIndex_II_case();
 }
