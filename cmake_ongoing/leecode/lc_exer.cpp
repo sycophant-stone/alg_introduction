@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <limits.h>
 #include<unordered_set>
+#include <unordered_map>
 
 using namespace std;
 //#define OPEN_LOG
@@ -692,6 +693,40 @@ static void lc243__ShortestWordDistance_case()
     LC_LOGI("find! distance:%d\n",distance);
 
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#244 ShortestWordDistance_II
+class WordDistance{
+    public:
+    WordDistance(vector<string> &words){
+        for(int i=0;i<words.size();i++){
+            m[words[i]].push_back(i); // string --> <pos1> <pos2> ...
+        }
+    }
+    int calc_shortestdistance(string word1, string word2){
+        int res=INT_MAX;
+        for(int i=0;i<m[word1].size();i++){
+            for(int j=0;j<m[word2].size();j++){
+                res=min(res,abs(m[word1][i]-m[word2][j]));
+            }
+        }
+        return res;
+    }
+    private:
+    unordered_map <string,vector<int>> m;
+    
+};
+
+static void lc244__ShortestWordDistance_II_case()
+{
+    int res=-1;
+    vector<string> bagwords={"practice", "makes", "perfect", "coding", "makes"};
+    WordDistance wd(bagwords);
+    res=wd.calc_shortestdistance("coding","practice");
+    LC_LOGI("find! distance:%d\n",res);
+}
                              
 void lc_entry()
 {
@@ -709,5 +744,6 @@ void lc_entry()
 //    lc229__MajorityElement_II_case();
 //    lc274__HIndex_case();
 //    lc275__HIndex_II_case();
-    lc243__ShortestWordDistance_case();
+//    lc243__ShortestWordDistance_case();
+    lc244__ShortestWordDistance_II_case();
 }
