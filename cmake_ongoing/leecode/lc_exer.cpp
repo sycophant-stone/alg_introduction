@@ -769,7 +769,41 @@ static void lc245__ShortestWordDistance_III_case()
     LC_LOGI("find! distance:%d\n",ret);
 
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#217 Contain Duplicate
+// 就是使用一个哈希表，遍历整个数组，如果哈希表里存在，返回false，如果不存在，则将其放入哈希表中
 
+class ContainDuplicate{
+    public:
+    bool doJudge(vector<int> nums){
+        unordered_map<int,int> m;
+        for(int i=0;i<nums.size();i++){
+            if(m.find(nums[i])!=m.end()){ // 当find函数找到时,会返回对应的iterator, 否则返回end()
+                return true; //有重复的.
+            }
+            ++m[nums[i]];
+        }
+        return false;
+    }
+};
+    
+static void lc217__ContainDuplicate_case()
+{
+    vector<int> exp1={1,2,3,1};
+    vector<int> exp2={1,2,3,4};
+    vector<int> exp3={1,1,1,3,3,4,3,2,4,2};
+    bool ret=false;
+    ContainDuplicate cd;
+    ret=cd.doJudge(exp1);
+    LC_LOGI("find! distance:%d\n",ret);
+    ret=cd.doJudge(exp2);
+    LC_LOGI("find! distance:%d\n",ret);
+    ret=cd.doJudge(exp3);
+    LC_LOGI("find! distance:%d\n",ret);
+    
+}
 
 void lc_entry()
 {
@@ -789,5 +823,6 @@ void lc_entry()
 //    lc275__HIndex_II_case();
 //    lc243__ShortestWordDistance_case();
 //    lc244__ShortestWordDistance_II_case();
-    lc245__ShortestWordDistance_III_case();
+//    lc245__ShortestWordDistance_III_case();
+    lc217__ContainDuplicate_case();
 }
