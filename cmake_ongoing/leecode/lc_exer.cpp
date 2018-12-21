@@ -714,6 +714,10 @@ class WordDistance{
         }
         return res;
     }
+    int calc_shortestdistance_opt(string word1,string word2){
+        int res=INT_MAX;
+        
+    }
     private:
     unordered_map <string,vector<int>> m;
     
@@ -727,7 +731,46 @@ static void lc244__ShortestWordDistance_II_case()
     res=wd.calc_shortestdistance("coding","practice");
     LC_LOGI("find! distance:%d\n",res);
 }
-                             
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#245 ShortestWordDistance_III
+// 这道题还是让我们求最短单词距离，有了之前两道题Shortest Word Distance II和Shortest Word Distance的基础，就大大降低了题目本身的难度。这道题增加了一个条件，就是说两个单词可能会相同，所以在第一题中的解法的基础上做一些修改. 
+// 依次判断word1,word2的位置,对于word1和word2不同的情况,各自记录给子位置,然后就可以了.
+// 对于word1和word2相同的情况,当找到word1时(其实也和word2值相同),对于word1的位置要更新成上个word2的位置,然后word2的的位置更新为此位置,这样做差了.
+
+class WordDistanceSameWords{
+    public:
+    int shortestDistance(vector<string> bagswords,string word1,string word2){
+        //int p1=-1,p2=-1;
+        int p1=bagswords.size(),p2=-bagswords.size();// 初值很关键. 不然第一次,bagswords[0]都不是word1和word2. 这样这个min值就是0了,以后的值也不可能比这个值小了. 所以需要把abs(p1-p2)最大化,所以就有正负的bagswords的长度.
+        int res=INT_MAX;
+        for(int i=0;i<bagswords.size();i++){
+            if(bagswords[i]==word1){
+                p1=word1==word2?p2:i;
+            }
+            if(bagswords[i]==word2){
+                p2=i;
+            }
+            res=min(res,abs(p1-p2));
+        }
+        return res;
+    }
+};
+
+static void lc245__ShortestWordDistance_III_case()
+{
+    int ret=-1;
+    vector<string> bagwords={"practice", "makes", "perfect", "coding", "makes"};
+    WordDistanceSameWords wds;
+    ret=wds.shortestDistance(bagwords,"makes","coding");
+    LC_LOGI("find! distance:%d\n",ret);
+    ret=wds.shortestDistance(bagwords,"makes","makes");
+    LC_LOGI("find! distance:%d\n",ret);
+
+}
+
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -745,5 +788,6 @@ void lc_entry()
 //    lc274__HIndex_case();
 //    lc275__HIndex_II_case();
 //    lc243__ShortestWordDistance_case();
-    lc244__ShortestWordDistance_II_case();
+//    lc244__ShortestWordDistance_II_case();
+    lc245__ShortestWordDistance_III_case();
 }
