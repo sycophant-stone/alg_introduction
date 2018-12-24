@@ -799,6 +799,23 @@ class ContainDuplicate{
         }
         return false;
     }
+    bool JudgeIJ(vector<int> nums, int k , int t){
+        map<long long, int> m; // val of nums, pos
+        int j=0;
+        for(int i=0;i<nums.size();i++){
+            if(i-j>k){
+                // 更新j,使得i和j间距保持(不超过)k.
+                m.erase(nums[j++]);
+            }
+            // 在m中找到第一个满足nums[i]-nums[j']<t的值.
+            auto a=m.lower_bound((long long)nums[i]-t);
+            if(a!=m.end()&&abs(a->first-nums[i])<=t){
+                return true;
+            }
+            m[nums[i]]=i;
+        }
+        return false;
+    }
 };
     
 static void lc217__ContainDuplicate_case()
@@ -841,6 +858,29 @@ static void lc219__ContainDuplicates_II_case()
     
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#220 Contain Duplicate III
+    
+static void lc220__ContainDuplicate_III_case()
+{
+    vector<int> exp1={1,2,3,1}; //true
+    vector<int> exp2={1,0,1,1}; //true
+    vector<int> exp3={1,5,9,1,5,9}; //false
+    int k1=3,k2=1,k3=2;
+    int t1=0,t2=2,t3=3;
+    bool ret=false;
+    ContainDuplicate cd;
+    ret=cd.JudgeIJ(exp1,k1,t1);
+    LC_LOGI("find! JudgeIJ:%d\n",ret);
+    ret=cd.JudgeIJ(exp2,k2,t2);
+    LC_LOGI("find! JudgeIJ:%d\n",ret);
+    ret=cd.JudgeIJ(exp3,k3,t3);
+    LC_LOGI("find! JudgeIJ:%d\n",ret);
+
+}
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -861,5 +901,6 @@ void lc_entry()
 //    lc244__ShortestWordDistance_II_case();
 //    lc245__ShortestWordDistance_III_case();
 //    lc217__ContainDuplicate_case();
-    lc219__ContainDuplicates_II_case();
+//    lc219__ContainDuplicates_II_case();
+    lc220__ContainDuplicate_III_case();
 }
