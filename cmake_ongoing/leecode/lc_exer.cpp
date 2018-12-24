@@ -787,6 +787,18 @@ class ContainDuplicate{
         }
         return false;
     }
+    bool JudgeNearlyK(vector<int> nums,int k){
+        unordered_map<int,int> m;// val of nums[pos], pos
+        for(int i=0;i<nums.size();i++){
+            if(m.find(nums[i])!=m.end()&&i-m[nums[i]]<=k){
+                return true;// 对于某次值num[i],如果之前有值了,就判断两个重复值间距是否满足k.
+            }
+            else{
+                m[nums[i]]=i; // val, pos
+            }
+        }
+        return false;
+    }
 };
     
 static void lc217__ContainDuplicate_case()
@@ -802,6 +814,30 @@ static void lc217__ContainDuplicate_case()
     LC_LOGI("find! distance:%d\n",ret);
     ret=cd.doJudge(exp3);
     LC_LOGI("find! distance:%d\n",ret);
+    
+}
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#219 Contain Duplicate II
+// 这道题是之前那道Contains Duplicate 包含重复值的延伸，不同之处在于那道题只要我们判断下数组中是否有重复值，而这道题限制了数组中只许有一组重复的数字，而且他们坐标差不能超过k
+
+
+static void lc219__ContainDuplicates_II_case()
+{
+    vector<int> exp1={1,2,3,1}; //true
+    vector<int> exp2={1,0,1,1}; //true
+    vector<int> exp3={1,2,3,1,2,3}; //false
+    int k1=3,k2=1,k3=2;
+    bool ret=false;
+    ContainDuplicate cd;
+    ret=cd.JudgeNearlyK(exp1,k1);
+    LC_LOGI("find! JudgeNearlyK:%d\n",ret);
+    ret=cd.JudgeNearlyK(exp2,k2);
+    LC_LOGI("find! JudgeNearlyK:%d\n",ret);
+    ret=cd.JudgeNearlyK(exp3,k3);
+    LC_LOGI("find! JudgeNearlyK:%d\n",ret);
     
 }
 
@@ -824,5 +860,6 @@ void lc_entry()
 //    lc243__ShortestWordDistance_case();
 //    lc244__ShortestWordDistance_II_case();
 //    lc245__ShortestWordDistance_III_case();
-    lc217__ContainDuplicate_case();
+//    lc217__ContainDuplicate_case();
+    lc219__ContainDuplicates_II_case();
 }
