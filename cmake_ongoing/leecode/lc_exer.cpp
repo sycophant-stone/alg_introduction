@@ -903,6 +903,26 @@ class JumpGame{
         }
         return dp.back()>=0;// 最后一个元素的引用,其值是否为正.
     }
+    bool greedyjumpEnd(vector<int> nums){
+        int reach=0;
+        for(int i=0;i<nums.size();i++){
+            if(reach<i||reach>(nums.size()-1))
+                break;
+            reach=max(reach,i+nums[i]); // 更新reach.
+        }
+        return reach >=(nums.size()-1);
+    }
+    int leastStepJumpEnd(vector<int> nums){
+        int stepcnt=0,cur=0,i=0;
+        while(cur<nums.size()-1){
+            stepcnt++;
+            int pre=cur;
+            for(;i<=pre;i++){ // 注意此处有个等于
+                cur=max(cur,i+nums[i]);
+            }
+        }
+        return stepcnt;
+    }
 };
 
 static void lc55_JumpGame_case()
@@ -915,7 +935,27 @@ static void lc55_JumpGame_case()
     LC_LOGI("find! jumpEnd:%d\n",ret);
     ret=jg.jumpEnd(exp2);
     LC_LOGI("find! jumpEnd:%d\n",ret);
+    ret=jg.greedyjumpEnd(exp1);
+    LC_LOGI("find! greedyjumpEnd:%d\n",ret);
+    ret=jg.greedyjumpEnd(exp2);
+    LC_LOGI("find! greedyjumpEnd:%d\n",ret);
 
+}
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#45 Jump Game II
+// 此题只让我们求到达最后一个位置的最少跳跃数
+// 需要两个变量cur和pre分别来保存当前的能到达的最远位置和之前能到达的最远位置，只要cur未达到最后一个位置则循环继续
+// 遍历当前跳跃能到的所有位置，算出一个最远的范围
+
+static void lc45_JumpGame_II_case()
+{
+    vector<int> exp1={2,3,1,1,4}; // 2.
+    JumpGame jg;
+    int ret=-1;
+    ret=jg.leastStepJumpEnd(exp1);
+    LC_LOGI("find! leastStepJumpEnd steps:%d\n",ret);
 }
 void lc_entry()
 {
@@ -939,5 +979,6 @@ void lc_entry()
 //    lc217__ContainDuplicate_case();
 //    lc219__ContainDuplicates_II_case();
 //    lc220__ContainDuplicate_III_case();
-    lc55_JumpGame_case();
+//    lc55_JumpGame_case();
+    lc45_JumpGame_II_case();
 }
