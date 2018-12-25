@@ -881,6 +881,42 @@ static void lc220__ContainDuplicate_III_case()
 
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#55 Jump Game
+// 这道题说的是有一个非负整数的数组，每个数字表示在当前位置的基础上最多可以走的步数，求判断能不能到达最后一个位置，开始我以为是必须刚好到达最后一个位置，超过了不算，其实是理解题意有误，因为每个位置上的数字表示的是最多可以走的步数而不是像玩大富翁一样摇骰子摇出几一定要走几步。那么我们可以用动态规划Dynamic Programming来解，我们维护一个一位数组dp，其中dp[i]表示达到i位置时剩余的步数，那么难点就是推导状态转移方程啦。
+// 到达当前位置的剩余步数跟什么有关呢，其实是跟上一个位置的剩余步数和上一个位置的跳力有关，这里的跳力就是原数组中每个位置的数字，因为其代表了以当前位置为起点能到达的最远位置。
+// 所以当前位置的剩余步数（dp值）和当前位置的跳力中的较大那个数决定了当前能到的最远距离，而下一个位置的剩余步数（dp值）就等于当前的这个较大值减去1，因为需要花一个跳力到达下一个位置
+// 状态转移方程了：dp[i] = max(dp[i - 1], nums[i - 1]) - 1
+// 如果当某一个时刻dp数组的值为负了，说明无法抵达当前位置，则直接返回false，最后我们判断dp数组最后一位是否为非负数即可知道是否能抵达该位置
+
+class JumpGame{
+    public:
+    bool jumpEnd(vector<int> nums){
+        vector<int> dp(nums.size(),0); // 初始化dp为零值.
+        for(int i=1;i<nums.size();i++){
+            dp[i]=max(dp[i-1],nums[i-1])-1;
+            if(dp[i]<0){
+                return false;
+            }
+        }
+        return dp.back()>=0;// 最后一个元素的引用,其值是否为正.
+    }
+};
+
+static void lc55_JumpGame_case()
+{
+    vector<int> exp1={2,3,1,1,4}; // ture
+    vector<int> exp2={3,2,1,0,4}; // false
+    JumpGame jg;
+    bool ret=false;
+    ret=jg.jumpEnd(exp1);
+    LC_LOGI("find! jumpEnd:%d\n",ret);
+    ret=jg.jumpEnd(exp2);
+    LC_LOGI("find! jumpEnd:%d\n",ret);
+
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -902,5 +938,6 @@ void lc_entry()
 //    lc245__ShortestWordDistance_III_case();
 //    lc217__ContainDuplicate_case();
 //    lc219__ContainDuplicates_II_case();
-    lc220__ContainDuplicate_III_case();
+//    lc220__ContainDuplicate_III_case();
+    lc55_JumpGame_case();
 }
