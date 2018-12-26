@@ -957,6 +957,38 @@ static void lc45_JumpGame_II_case()
     ret=jg.leastStepJumpEnd(exp1);
     LC_LOGI("find! leastStepJumpEnd steps:%d\n",ret);
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#121 Best Time To Buy And Sell Stock
+
+class Stock{
+    public:
+    int whentobuyandSell(vector<int> stock){
+        int res=0,buy=INT_MAX;
+        for(int i=0;i<stock.size();i++){
+            buy=min(buy,stock[i]);
+            res=max(res,stock[i]-buy);
+        }
+        return res;
+    }
+};
+
+static void lc121__BestTimeToBuyAndSellStock_case()
+{
+    vector<int> exp1={7,1,5,3,6,4}; //5
+    vector<int> exp2={7,6,4,3,1}; //0
+    int ret=-1;
+    Stock stk;
+    ret=stk.whentobuyandSell(exp1);
+    LC_LOGI("find! whentobuyandSell' price :%d\n",ret);
+    ret=stk.whentobuyandSell(exp2);
+    LC_LOGI("find! whentobuyandSell' price :%d\n",ret);
+
+}
+
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -980,5 +1012,6 @@ void lc_entry()
 //    lc219__ContainDuplicates_II_case();
 //    lc220__ContainDuplicate_III_case();
 //    lc55_JumpGame_case();
-    lc45_JumpGame_II_case();
+//    lc45_JumpGame_II_case();
+    lc121__BestTimeToBuyAndSellStock_case();
 }
