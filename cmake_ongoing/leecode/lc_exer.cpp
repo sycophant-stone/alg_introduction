@@ -982,6 +982,19 @@ class Stock{
         }
         return res;
     }
+    int whenToBuyAndSell_III(vector<int> stock){
+        if(stock.empty()) return 0;
+        int global[3] = {0}, local[3] = {0}; // 3是代表第2次.
+        for(int i=0;i<stock.size()-1;i++){ // 遍历天数,计算差值
+            int diff = stock[i+1] - stock[i];
+            for(int j=2;j>=1;j--){
+                local[j] = max(global[j-1]+max(diff,0), local[j]+diff);
+                global[j] = max(local[j],global[j]); // global基于local
+            }
+        }
+        return global[2];
+        
+    }
 };
 
 static void lc121__BestTimeToBuyAndSellStock_case()
@@ -1013,6 +1026,20 @@ static void lc122__BestTimeToBuyAndSellStock_II_case()
     LC_LOGI("find! whentobuyandSell_II' price :%d\n",ret);
 
 }
+static void lc123__BestTimeToBuyAndSellStock_III_case()
+{
+    vector<int> exp1={3,3,5,0,0,3,1,4}; // 6
+    vector<int> exp2={1,2,3,4,5}; // 4
+    vector<int> exp3={7,6,4,3,1}; // 0
+    int ret = -1;
+    Stock stk;
+    ret=stk.whenToBuyAndSell_III(exp1);
+    LC_LOGI("find! whenToBuyAndSell_III' price :%d\n",ret);
+    ret=stk.whenToBuyAndSell_III(exp2);
+    LC_LOGI("find! whenToBuyAndSell_III' price :%d\n",ret);
+    ret=stk.whenToBuyAndSell_III(exp3);
+    LC_LOGI("find! whenToBuyAndSell_III' price :%d\n",ret);    
+}
 
 void lc_entry()
 {
@@ -1039,5 +1066,6 @@ void lc_entry()
 //    lc55_JumpGame_case();
 //    lc45_JumpGame_II_case();
 //    lc121__BestTimeToBuyAndSellStock_case();
-    lc122__BestTimeToBuyAndSellStock_II_case();
+//    lc122__BestTimeToBuyAndSellStock_II_case();
+      lc123__BestTimeToBuyAndSellStock_III_case();
 }
