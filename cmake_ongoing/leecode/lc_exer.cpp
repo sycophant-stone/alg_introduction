@@ -995,6 +995,19 @@ class Stock{
         return global[2];
         
     }
+    int whenToBuyAndSell_IV(vector<int> stock,int k){
+        if(stock.empty()) return 0;
+        if(k>=stock.size()) return whentobuyandSell_II(stock);
+        int global[k+1] = {0}, local[k+1] = {0};
+        for(int i=0;i<stock.size()-1;i++){
+            int diff=stock[i+1] - stock[i];
+            for(int j=k;j>=1;j--){
+                local[j] = max(global[j-1]+max(diff,0), local[j]+diff);
+                global[j] = max(global[j],local[j]);
+            }
+        }
+        return global[k];
+    }
 };
 
 static void lc121__BestTimeToBuyAndSellStock_case()
@@ -1040,6 +1053,19 @@ static void lc123__BestTimeToBuyAndSellStock_III_case()
     ret=stk.whenToBuyAndSell_III(exp3);
     LC_LOGI("find! whenToBuyAndSell_III' price :%d\n",ret);    
 }
+static void lc188__BestTimeToBuyAndSellStock_IV_case()
+{
+    vector<int> exp1={2,4,1}; // 2
+    vector<int> exp2={3,2,6,5,0,3}; // 7
+    int k1 = 2;
+    int k2 = 2;
+    int ret = -1;
+    Stock stk;
+    ret=stk.whenToBuyAndSell_IV(exp1,k1);
+    LC_LOGI("find! whenToBuyAndSell_IV' price :%d\n",ret);
+    ret=stk.whenToBuyAndSell_IV(exp2,k2);
+    LC_LOGI("find! whenToBuyAndSell_IV' price :%d\n",ret);
+}
 
 void lc_entry()
 {
@@ -1067,5 +1093,6 @@ void lc_entry()
 //    lc45_JumpGame_II_case();
 //    lc121__BestTimeToBuyAndSellStock_case();
 //    lc122__BestTimeToBuyAndSellStock_II_case();
-      lc123__BestTimeToBuyAndSellStock_III_case();
+//      lc123__BestTimeToBuyAndSellStock_III_case();
+    lc188__BestTimeToBuyAndSellStock_IV_case();
 }
