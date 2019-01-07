@@ -309,11 +309,12 @@ static int firstMissingPositive_I(vector<int> &nums)
 {
     int mx=0;
     unordered_set<int> s;
-    for(num:nums){
-        if(num<=0)
+    //for(num:nums){
+    for(int i=0;i<nums.size();i++){
+        if(nums[i]<=0)
             continue;
-        s.insert(num);
-        mx=max(num,mx);
+        s.insert(nums[i]);
+        mx=max(nums[i],mx);
     }
     for(int i=1;i<mx;i++){
         if(s.count(i)==0)
@@ -525,11 +526,12 @@ class MajorityElement {
     public:
     int calc(vector<int> &nums){
         int cnt=0,res=0;
-        for(num:nums){ // 前提,肯定存在众数. 假定第一个为众数,然后验证.
+        //for(num:nums){ // 前提,肯定存在众数. 假定第一个为众数,然后验证.
+        for(int i=0;i<nums.size();i++){
             if(cnt==0){ // 归零之后重新计算众数.
-                res=num; 
+                res=nums[i]; 
                 cnt++;
-            }else if(num==res){
+            }else if(nums[i]==res){
                 cnt++; // 相同则增
             }else {
                 cnt--; // 不同则减

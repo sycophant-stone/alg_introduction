@@ -3,7 +3,8 @@
 using namespace std;
 
 //#define JULY_LOGI(format,...) printf("File: "__FILE__", Line: %05d: "format"\n", __LINE__, ##__VA_ARGS__)  
-#define JULY_LOGI(format,...) printf("[Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
+//#define JULY_LOGI(format,...) printf("[Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
+#define JULY_LOGI(format,...) 
  
 //定义一个链表节点
 struct ListNode

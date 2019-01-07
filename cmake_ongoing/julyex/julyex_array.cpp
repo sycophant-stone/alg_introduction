@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdio.h>
 using namespace std;
-#define OPEN_LOG
+//#define OPEN_LOG
 #ifdef OPEN_LOG
 #define julyex_logv printf
 #define JULY_LOGI(format,...) printf("[Line: %05d]: "format"\n", __LINE__, ##__VA_ARGS__)  
