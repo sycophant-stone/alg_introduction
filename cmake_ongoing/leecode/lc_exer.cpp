@@ -1010,6 +1010,16 @@ class Stock{
         }
         return global[k];
     }
+    int whenToBuyAndSell_With_CoolDown(vector<int> stock){
+        int buy=INT_MIN,pre_buy=0,sell=0,pre_sell=0;
+        for(int i=0;i<stock.size();i++){
+            pre_buy=buy;
+            buy = max(pre_buy, sell-stock[i]);
+            pre_sell=sell;
+            sell=max(pre_sell,pre_buy+stock[i]);
+        }
+        return sell;
+    }
 };
 
 static void lc121__BestTimeToBuyAndSellStock_case()
@@ -1069,6 +1079,14 @@ static void lc188__BestTimeToBuyAndSellStock_IV_case()
     LC_LOGI("find! whenToBuyAndSell_IV' price :%d\n",ret);
 }
 
+static void lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case()
+{
+    vector<int> exp1={1, 2, 3, 0, 2}; // 3
+    int ret = -1;
+    Stock stk;
+    ret = stk.whenToBuyAndSell_With_CoolDown(exp1);
+    LC_LOGI("find! whenToBuyAndSell_With_CoolDown' price :%d\n",ret);
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1096,5 +1114,6 @@ void lc_entry()
 //    lc121__BestTimeToBuyAndSellStock_case();
 //    lc122__BestTimeToBuyAndSellStock_II_case();
 //      lc123__BestTimeToBuyAndSellStock_III_case();
-    lc188__BestTimeToBuyAndSellStock_IV_case();
+//    lc188__BestTimeToBuyAndSellStock_IV_case();
+    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
 }
