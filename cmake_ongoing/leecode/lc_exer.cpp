@@ -1087,6 +1087,34 @@ static void lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case()
     ret = stk.whenToBuyAndSell_With_CoolDown(exp1);
     LC_LOGI("find! whenToBuyAndSell_With_CoolDown' price :%d\n",ret);
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#11 Container With Most Water 
+
+class Container{
+    public:
+    int MostWater(vector<int> nums){
+        int i=0;
+        int j=nums.size()-1;
+        int res = INT_MIN;
+        while(i<j){
+            res =max(res, (j-i)*(min(nums[i],nums[j])));
+            nums[i]<nums[j]?i++:j--;
+        }
+        return res;
+    }
+};
+static void lc11_ContainerWithMostWater_case()
+{
+    vector<int> exp1={1,8,6,2,5,4,8,3,7}; // 49
+    int ret = INT_MIN;
+    Container ctr;
+    ret = ctr.MostWater(exp1);
+    LC_LOGI("find! MostWater:%d\n",ret);
+}
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1115,5 +1143,6 @@ void lc_entry()
 //    lc122__BestTimeToBuyAndSellStock_II_case();
 //      lc123__BestTimeToBuyAndSellStock_III_case();
 //    lc188__BestTimeToBuyAndSellStock_IV_case();
-    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
+//    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
+    lc11_ContainerWithMostWater_case();
 }
