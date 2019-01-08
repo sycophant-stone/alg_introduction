@@ -1152,6 +1152,44 @@ static void lc42__TrappingRainWater_case()
     ret = trw.collectWater(exp1);
     LC_LOGI("find! TrappingRainWater:%d\n",ret);
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#334 lc334__IncreasingTripletSubsequence_case
+
+class TripletSubsequence{
+    public:
+    bool increasingTriplet(vector<int> nums){
+        vector<int> dp(nums.size(),1); // n个单位,初始值为1.
+        int breakpoint = 3;
+        for(int i=0;i<nums.size();i++){
+            for(int j=0;j<i;j++){
+                if(nums[j]<nums[i]){
+                    dp[i] = max(dp[i],dp[i-1]+1);
+                    if(dp[i]>breakpoint)
+                        return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+};
+
+
+static void lc334__IncreasingTripletSubsequence_case()
+{
+    vector<int> exp1={1, 2, 3, 4, 5};// true
+    vector<int> exp2={5, 4, 3, 2, 1};// false
+    int ret=0;
+    TripletSubsequence ts;
+    ret = ts.increasingTriplet(exp1);
+    LC_LOGI("find! increasingTriplet:%d\n",ret);
+    ret = ts.increasingTriplet(exp2);
+    LC_LOGI("find! increasingTriplet:%d\n",ret);
+
+}
+
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1178,9 +1216,10 @@ void lc_entry()
 //    lc45_JumpGame_II_case();
 //    lc121__BestTimeToBuyAndSellStock_case();
 //    lc122__BestTimeToBuyAndSellStock_II_case();
-//      lc123__BestTimeToBuyAndSellStock_III_case();
+//    lc123__BestTimeToBuyAndSellStock_III_case();
 //    lc188__BestTimeToBuyAndSellStock_IV_case();
 //    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
 //    lc11_ContainerWithMostWater_case();
-    lc42__TrappingRainWater_case();
+//    lc42__TrappingRainWater_case();
+    lc334__IncreasingTripletSubsequence_case();
 }
