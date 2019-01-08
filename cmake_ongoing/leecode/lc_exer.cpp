@@ -1115,6 +1115,43 @@ static void lc11_ContainerWithMostWater_case()
     LC_LOGI("find! MostWater:%d\n",ret);
 }
 
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#11 lc42__TrappingRainWater_case
+
+class TrapRainWater{
+    public:
+    int collectWater(vector<int> water){
+        int l=0,r=water.size()-1,res=0;
+        int lmax=0,rmax=0;
+        while(l<r){
+            if(water[l]<water[r]){
+                lmax = water[l++];// 这里的更新,不然下面的lmax>water[l]肯定是不成立的,导致l不会++.
+                while(l<r&&lmax>water[l]){
+                    res+=lmax-water[l];
+                    l++;
+                }
+            }else{
+                rmax=water[r--];
+                while(l<r&&rmax>water[r]){
+                    res+=rmax-water[r];
+                    r--;
+                }
+            }
+        }
+        return res;
+        
+    }
+};
+static void lc42__TrappingRainWater_case()
+{
+    vector<int> exp1={0,1,0,2,1,0,1,3,2,1,2,1}; // 6
+    int ret=INT_MIN;
+    TrapRainWater trw;
+    ret = trw.collectWater(exp1);
+    LC_LOGI("find! TrappingRainWater:%d\n",ret);
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1144,5 +1181,6 @@ void lc_entry()
 //      lc123__BestTimeToBuyAndSellStock_III_case();
 //    lc188__BestTimeToBuyAndSellStock_IV_case();
 //    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
-    lc11_ContainerWithMostWater_case();
+//    lc11_ContainerWithMostWater_case();
+    lc42__TrappingRainWater_case();
 }
