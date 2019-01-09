@@ -7,6 +7,7 @@
 #include <limits.h>
 #include<unordered_set>
 #include <unordered_map>
+#include <set>
 
 using namespace std;
 //#define OPEN_LOG
@@ -1220,6 +1221,50 @@ static void lc128__LongestConsecutiveSequence_case()
     ret = cs.LongestOne(exp1);
     LC_LOGI("find! LongestOne:%d\n",ret);
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#64 lc164__MaximumGap_case
+class Gap{
+    public:
+    int maximum(vector<int> nums){
+        // 桶排序思想,拿到最大最小值.
+        int mn=INT_MAX,mx=INT_MIN;
+        int res=INT_MIN;
+        for(int i=0;i<nums.size();i++){
+            mn=min(mn,nums[i]);
+            mx=max(mx,nums[i]);
+        }
+        int bucket_size = (mx-mn)/nums.size() + 1; // 拿到桶个数,每个桶装多少.
+        int bucket_num = (mx-mn)/bucket_size + 1;
+        std::set<int> s;
+        vector<int> bucket_min(bucket_num,INT_MAX);
+        vector<int> bucket_max(bucket_num,INT_MIN);
+        for(int i=0;i<nums.size();i++){
+            int idx = (nums[i]-mn)/bucket_size; // 给每个数找到自己桶.
+            bucket_min[idx] = min(bucket_min[idx],nums[i]);
+            bucket_max[idx] = max(bucket_max[idx],nums[i]);
+            s.insert(idx);
+        }
+        int pre=0;
+        for(int i=0;i<nums.size();i++){
+            if(!s.count(i))continue;
+            res=max(res,bucket_min[i]-bucket_max[pre]); // 因为我们桶的个数和nums成员个数一样,所以桶间的差才是gap.
+            pre=i;
+        }
+        
+        return res;
+    }
+};
+static void lc164__MaximumGap_case()
+{
+    vector<int> exp1={3,6,9,1};// 3
+    int ret=0;
+    Gap gap;
+    ret = gap.maximum(exp1);
+    LC_LOGI("find! maximun:%d\n",ret);
+    
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1252,5 +1297,6 @@ void lc_entry()
 //    lc11_ContainerWithMostWater_case();
 //    lc42__TrappingRainWater_case();
 //    lc334__IncreasingTripletSubsequence_case();
-    lc128__LongestConsecutiveSequence_case();
+//    lc128__LongestConsecutiveSequence_case();
+    lc164__MaximumGap_case();
 }
