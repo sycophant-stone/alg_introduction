@@ -1189,7 +1189,37 @@ static void lc334__IncreasingTripletSubsequence_case()
     LC_LOGI("find! increasingTriplet:%d\n",ret);
 
 }
-
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#128 lc128__LongestConsecutiveSequence_case
+// 100, 4, 200, 1, 3, 2
+// 找到无序数组中"连续个数",100, 4, 200, 1, 3, 2中可以找到1,2,3,4共四个连续的数.
+class ConsecutiveSequence{
+    public:
+    int LongestOne(vector<int> nums){
+        int res=INT_MIN;
+        unordered_set<int> s(nums.begin(),nums.end());
+        for(int i=0;i<nums.size();i++){
+            if(!s.count(nums[i]))continue;
+            s.erase(nums[i]);//删除
+            int pre=nums[i]-1;
+            int next=nums[i]+1;
+            while(s.count(pre))s.erase(pre--);
+            while(s.count(next))s.erase(next++);
+            res=max(res,next-pre-1);
+        }
+        return res;
+    }
+};
+static void lc128__LongestConsecutiveSequence_case()
+{
+    vector<int> exp1={100, 4, 200, 1, 3, 2};//4
+    int ret=0;
+    ConsecutiveSequence cs;
+    ret = cs.LongestOne(exp1);
+    LC_LOGI("find! LongestOne:%d\n",ret);
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1221,5 +1251,6 @@ void lc_entry()
 //    lc309__BestTimeToBuyAndSellStockWithCOOLDOWN_case();
 //    lc11_ContainerWithMostWater_case();
 //    lc42__TrappingRainWater_case();
-    lc334__IncreasingTripletSubsequence_case();
+//    lc334__IncreasingTripletSubsequence_case();
+    lc128__LongestConsecutiveSequence_case();
 }
