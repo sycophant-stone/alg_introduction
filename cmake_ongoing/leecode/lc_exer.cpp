@@ -1297,6 +1297,43 @@ static void lc287__FindtheDuplicateNumber_case()
     LC_LOGI("find!findfirst DuplicateNumber:%d\n",ret);
 
 }
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#145 lc145__Candy_case
+class Candy{
+    public:
+    int minCandies(vector<int> rating){
+        //两次遍历.
+        int res=0;
+        vector<int> cds(rating.size(),1);
+        for(int i=0;i<rating.size()-1;i++){
+            if(rating[i+1]>rating[i])
+                cds[i+1]=cds[i]+1;
+        }
+        for(int i=rating.size()-1;i>0;i--){
+            if(rating[i-1]>rating[i]){
+                cds[i-1] = max(cds[i-1],cds[i]+1);
+            }
+        }
+        for(int i=0;i<cds.size();i++){
+            res+=cds[i];
+        }
+        return res;
+    }
+};
+static void lc145__Candy_case()
+{
+    vector<int> exp1={1,0,2};//5
+    vector<int> exp2={1,2,2};//4
+    int ret=0;
+    Candy cd;
+    ret = cd.minCandies(exp1);
+    LC_LOGI("find!minCandies :%d\n",ret);
+    ret = cd.minCandies(exp2);
+    LC_LOGI("find!minCandies :%d\n",ret);
+    
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1331,5 +1368,6 @@ void lc_entry()
 //    lc334__IncreasingTripletSubsequence_case();
 //    lc128__LongestConsecutiveSequence_case();
 //    lc164__MaximumGap_case();
-    lc287__FindtheDuplicateNumber_case();
+//    lc287__FindtheDuplicateNumber_case();
+    lc145__Candy_case();
 }
