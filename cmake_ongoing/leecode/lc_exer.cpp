@@ -1265,6 +1265,38 @@ static void lc164__MaximumGap_case()
     LC_LOGI("find! maximun:%d\n",ret);
     
 }
+
+/****************************************************************************************/
+/****************************************************************************************/
+/****************************************************************************************/
+// lc#287 lc287__FindtheDuplicateNumber_case
+class DuplicateNumber{
+    public:
+    int findfirst(string words){
+        unordered_map<char,int> m;
+        for(int i=0;i<words.size();i++){
+            m[words[i]]++;
+        }
+        for(int i=0;i<words.size();i++){
+            if(m[words[i]]==1)
+                return i;
+        }
+        return -1;
+    }
+};
+static void lc287__FindtheDuplicateNumber_case()
+{
+    string exp1 = "leetcode";//0
+    string exp2 = "loveleetcode";//2
+    int ret=0;
+    
+    DuplicateNumber dn;
+    ret = dn.findfirst(exp1);
+    LC_LOGI("find!findfirst DuplicateNumber:%d\n",ret);
+    ret = dn.findfirst(exp2);
+    LC_LOGI("find!findfirst DuplicateNumber:%d\n",ret);
+
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1298,5 +1330,6 @@ void lc_entry()
 //    lc42__TrappingRainWater_case();
 //    lc334__IncreasingTripletSubsequence_case();
 //    lc128__LongestConsecutiveSequence_case();
-    lc164__MaximumGap_case();
+//    lc164__MaximumGap_case();
+    lc287__FindtheDuplicateNumber_case();
 }
