@@ -1300,7 +1300,7 @@ static void lc287__FindtheDuplicateNumber_case()
 /****************************************************************************************/
 /****************************************************************************************/
 /****************************************************************************************/
-// lc#145 lc145__Candy_case
+// lc#135 lc135__Candy_case
 class Candy{
     public:
     int minCandies(vector<int> rating){
@@ -1322,7 +1322,7 @@ class Candy{
         return res;
     }
 };
-static void lc145__Candy_case()
+static void lc135__Candy_case()
 {
     vector<int> exp1={1,0,2};//5
     vector<int> exp2={1,2,2};//4
@@ -1369,5 +1369,5 @@ void lc_entry()
 //    lc128__LongestConsecutiveSequence_case();
 //    lc164__MaximumGap_case();
 //    lc287__FindtheDuplicateNumber_case();
-    lc145__Candy_case();
+    lc135__Candy_case();
 }
