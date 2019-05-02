@@ -742,7 +742,12 @@ static void lc244__ShortestWordDistance_II_case()
 // 这道题还是让我们求最短单词距离，有了之前两道题Shortest Word Distance II和Shortest Word Distance的基础，就大大降低了题目本身的难度。这道题增加了一个条件，就是说两个单词可能会相同，所以在第一题中的解法的基础上做一些修改. 
 // 依次判断word1,word2的位置,对于word1和word2不同的情况,各自记录给子位置,然后就可以了.
 // 对于word1和word2相同的情况,当找到word1时(其实也和word2值相同),对于word1的位置要更新成上个word2的位置,然后word2的的位置更新为此位置,这样做差了.
+/*
+a)	当word1和word2不相同时, 退化为找到word1时,记录其位置, 找到word2时记录其位置.然后位置abs差.
+b)	当兼容word1和word2相同(但是其对应的index不同)时, 用p1和p2表示word1和word2. 找到word1时(因为相等,也就找到了word2), 这时只把p2的值更新, p1的值跟新为p2的上一次的值.
+i)	因为有上一次的含义, 这样在找到相同的第二个时, 还是更新p2为最新的这个位置, p1更新为p2上一个值(也就是第一个的位置)
 
+*/
 class WordDistanceSameWords{
     public:
     int shortestDistance(vector<string> bagswords,string word1,string word2){
