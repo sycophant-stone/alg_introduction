@@ -1337,6 +1337,32 @@ static void lc135__Candy_case()
     LC_LOGI("find!minCandies :%d\n",ret);
     
 }
+
+class LongestIncreasingSubsequence {
+public:
+	int lengthOfLIS(vector<int>& nums) {
+		vector<int> dp(nums.size(), 1);
+		int res = 0;
+		for (int i = 0; i < nums.size(); ++i) {
+			for (int j = 0; j < i; ++j) {
+				if (nums[i] > nums[j]) {
+					dp[i] = max(dp[i], dp[j] + 1);
+				}
+			}
+			res = max(res, dp[i]);
+		}
+		return res;
+	}
+};
+
+static void lc330__LongestIncreasingSubsequence_case(void)
+{
+	vector<int> exp1 = { 10,9,2,5,3,7,101,18 };//5
+	int ret = 0;
+	LongestIncreasingSubsequence lis;
+	ret = lis.lengthOfLIS(exp1);
+	LC_LOGI("find!LongestIncreasingSubsequence :%d\n", ret);
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1372,5 +1398,6 @@ void lc_entry()
 //    lc128__LongestConsecutiveSequence_case();
 //    lc164__MaximumGap_case();
 //    lc287__FindtheDuplicateNumber_case();
-    lc135__Candy_case();
+//    lc135__Candy_case();
+	lc330__LongestIncreasingSubsequence_case();
 }
