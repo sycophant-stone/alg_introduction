@@ -608,6 +608,7 @@ static void lc229__MajorityElement_II_case()
 // lc#274 H Index
 // 这道题让我们求H指数，这个质数是用来衡量研究人员的学术水平的质数，定义为一个人的学术文章有n篇分别被引用了n次，那么H指数就是n。而且wiki上直接给出了算法，可以按照如下方法确定某人的H指数：1、将其发表的所有SCI论文按被引次数从高到低排序；2、从前往后查找排序后的列表，直到某篇论文的序号大于该论文被引次数。所得序号减一即为H指数。
 
+#include<functional>
 class HIndex{
     public:
     int calc(vector<int> &citations){
@@ -1001,7 +1002,9 @@ class Stock{
     int whenToBuyAndSell_IV(vector<int> stock,int k){
         if(stock.empty()) return 0;
         if(k>=stock.size()) return whentobuyandSell_II(stock);
-        int global[k+1] = {0}, local[k+1] = {0};
+        //int global[k+1] = {0}, local[k+1] = {0};
+		int *global = new int[k + 1];
+		int *local = new int[k + 1];
         for(int i=0;i<stock.size()-1;i++){
             int diff=stock[i+1] - stock[i];
             for(int j=k;j>=1;j--){
