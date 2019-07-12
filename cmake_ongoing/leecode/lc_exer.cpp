@@ -1369,6 +1369,41 @@ static void lc330__LongestIncreasingSubsequence_case(void)
 	ret = lis.lengthOfLIS(exp1);
 	LC_LOGI("find!LongestIncreasingSubsequence :%d\n", ret);
 }
+class MedianofTwoSortedArrays {
+public:
+	double find_median_two_sorted_array(vector<int> &nums1, vector<int> &nums2) {
+		int left, right;
+		int len1,len2;
+		len1 = nums1.size();
+		len2 = nums2.size();
+		left  = (len1+len2+1)/2;
+		right = (len1+len2+2)/2;
+		return (find_Kth(nums1, 0, nums2, 0, left)+find_Kth(nums1, 0, nums2, 0, right))/2.0;
+	}
+	int find_Kth(vector<int> &nums1, int pos1, vector<int> &nums2, int pos2, int key) {
+		if(pos1>nums1.size()) return nums2[pos2+key-1];
+		if(pos2>nums2.size()) return nums1[pos1+key-1];
+		if(key==1) return min(nums1[pos1], nums2[pos2]);
+		int median1 = (pos1+key/2-1<nums1.size())?nums1[pos1+key/2-1]:INT_MAX;
+		int median2 = (pos2+key/2-1<nums2.size())?nums2[pos2+key/2-1]:INT_MAX;
+		if(median1<median2){
+			// find lower k, we need the exactly Kth value, so abandan the lower k's values
+			return find_Kth(nums1,pos1+key/2-1,nums2,pos2,key-key/2);
+		}else{
+			return find_Kth(nums1,pos1,nums2,pos2+key/2-1,key-key/2);
+		}
+
+	}
+};
+static void lc4_MedianofTwoSortedArrays_case(void)
+{
+	vector<int> expnum1 = {1,3}; 
+	vector<int> expnum2 = {2}; 
+	MedianofTwoSortedArrays mfsa;
+	int res = mfsa.find_median_two_sorted_array(expnum1, expnum2);
+    	LC_LOGI("find!median from 2 sorted arrays :%d\n", res);
+	
+}
 void lc_entry()
 {
 //    spiral_matrix_ii_case();
@@ -1405,5 +1440,6 @@ void lc_entry()
 //    lc164__MaximumGap_case();
 //    lc287__FindtheDuplicateNumber_case();
 //    lc135__Candy_case();
-	lc330__LongestIncreasingSubsequence_case();
+//	lc330__LongestIncreasingSubsequence_case();
+	lc4_MedianofTwoSortedArrays_case();
 }
